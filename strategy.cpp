@@ -1,40 +1,79 @@
+
+//*********************************************************** Explanation ***************************************************************//
+/*
+File : strategy.cpp
+Used : Sample send or receive data to from any media
+Last Update : 2023/5/11
+Programmer : Mohammad Lotfi
+Site : https://www.mahsen.ir
+Tel : +989124662703
+Email : info@mahsen.ir
+Design Pattern : Strategy & Singleton
+*/
+//************************************************************* Warning *****************************************************************//
+/*
+none
+*/
+//************************************************************* Wizard ******************************************************************//
+/*
+none
+*/
+//************************************************************ includes ******************************************************************//
+/* Include standard input-output stream head */
 #include "iostream"
-
+//************************************************************ defineds ******************************************************************//
+/*
+none
+*/
+//************************************************************ variables *****************************************************************//
+/* Using std */
 using namespace std;
-
+//************************************************************* opjects ******************************************************************//
+/* All object to return their status need this object */
 class Status {
 
     public:
 
-        enum class Messege {
+        /* All possible messages */
+        enum class Message {
             Success,
             Fault,
             Fault_Media
         };
 
-        void SetMessege(Messege _Messege) {
-            this->_Messege = _Messege;
+        /* Set current message from outside */
+        void SetMessage(Message _Message) {
+            this->_Message = _Message;
         }
 
-        Messege GetMessege() {
-            return _Messege;
+        /* Set current message */
+        Message GetMessage() {
+            return _Message;
         }
 
-        void ShowMessege() {
-            cout << "Messege : " << Messege2String[(int)this->_Messege] << endl;
+        /* Show current message on console */
+        void ShowMessage() {
+            cout << "Message : " << Message2String[(int)this->_Message] << endl;
         }
 
     private:
-        const string Messege2String[3] = {"Success", "Fault", "Fault_Media"};
-        Messege _Messege;
-};
 
+        /* All message explanations */
+        const string Message2String[3] = {"Success", "Fault", "Fault_Media"};
+
+        /* The variable holding the current message */
+        Message _Message;
+};
+//_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+/* Media is interface with virtual functions to use other media for example (UART,LAN,RS485,USB,...) and all things that follows this structure */
 class Media {    
     public: 
-        virtual Status* Send(string Messege, uint32_t Length) = 0;
-        virtual Status* Receive(string *Messege, uint32_t *Length) = 0;
+        /* This function for send data*/
+        virtual Status* Send(string Message, uint32_t Length) = 0;
+        /* This function for receive data*/
+        virtual Status* Receive(string *Message, uint32_t *Length) = 0;
 };
-
+//_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 class RS485 : public Media {    
     private: 
         static RS485 *Instance;
@@ -49,28 +88,28 @@ class RS485 : public Media {
             return Instance;
         }
 
-        Status* Send(string Messege, uint32_t Length) override {
+        Status* Send(string Message, uint32_t Length) override {
             static Status status;
-            status.SetMessege(Status::Messege::Fault);
+            status.SetMessage(Status::Message::Fault);
 
             cout << "RS485 : Send()" << endl;
-            status.SetMessege(Status::Messege::Success);
+            status.SetMessage(Status::Message::Success);
 
             return &status;
         }
 
-        Status* Receive(string *Messege, uint32_t *Length) override {
+        Status* Receive(string *Message, uint32_t *Length) override {
             static Status status;
-            status.SetMessege(Status::Messege::Fault);    
+            status.SetMessage(Status::Message::Fault);    
 
             cout << "RS485 : Receive()" << endl;
-            status.SetMessege(Status::Messege::Success);
+            status.SetMessage(Status::Message::Success);
 
             return &status;
         }
 };
 RS485 *RS485::Instance = nullptr;
-
+//_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 class LAN : public Media {    
     private: 
         static LAN *Instance;
@@ -85,68 +124,68 @@ class LAN : public Media {
             return Instance;
         }
 
-        Status* Send(string Messege, uint32_t Length) override {
+        Status* Send(string Message, uint32_t Length) override {
             static Status status;
-            status.SetMessege(Status::Messege::Fault);
+            status.SetMessage(Status::Message::Fault);
 
             cout << "LAN : Send()" << endl;
-            status.SetMessege(Status::Messege::Success);
+            status.SetMessage(Status::Message::Success);
 
             return &status;
         }
 
-        Status* Receive(string *Messege, uint32_t *Length) override {
+        Status* Receive(string *Message, uint32_t *Length) override {
             static Status status;
-            status.SetMessege(Status::Messege::Fault);    
+            status.SetMessage(Status::Message::Fault);    
 
             cout << "LAN : Receive()" << endl;
-            status.SetMessege(Status::Messege::Success);
+            status.SetMessage(Status::Message::Success);
 
             return &status;
         }
 };
 LAN *LAN::Instance = nullptr;
-
+//_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 class IEC {
     public:
         IEC() : _Media(nullptr) {};
         Status* setMedia(Media *_Media) {
             static Status status;
-            status.SetMessege(Status::Messege::Fault); 
+            status.SetMessage(Status::Message::Fault); 
 
             this->_Media = _Media; 
-            status.SetMessege(Status::Messege::Success);
+            status.SetMessage(Status::Message::Success);
 
             return &status;
         }
         Status* Handle(void) {
             static Status status;
-            status.SetMessege(Status::Messege::Fault);
+            status.SetMessage(Status::Message::Fault);
 
             if(_Media == nullptr) {
-                status.SetMessege(Status::Messege::Fault_Media);
+                status.SetMessage(Status::Message::Fault_Media);
                 return &status;
             }            
 
-            string Messege;
+            string Message;
             uint32_t Length;
             
-            Messege = "Data";
+            Message = "Data";
             Length = 4;
-            _Media->Send(Messege, Length);
+            _Media->Send(Message, Length);
 
-            Messege = "";
+            Message = "";
             Length = 0;
-            _Media->Receive(&Messege, &Length);
+            _Media->Receive(&Message, &Length);
 
-            status.SetMessege(Status::Messege::Success);
+            status.SetMessage(Status::Message::Success);
 
             return &status;
         }
     private:
         Media *_Media;
 };
-
+//************************************************************ functions *****************************************************************//
 int main() {
     
     Status *status;
@@ -156,7 +195,7 @@ int main() {
 
     IEC *iec = new IEC();
     status = iec->Handle();
-    status->ShowMessege();
+    status->ShowMessage();
 
     status = iec->setMedia(rs485);
     status = iec->Handle();
@@ -166,3 +205,12 @@ int main() {
 
     return 0;
 }
+//*************************************************************** tasks *******************************************************************//
+/*
+none
+*/
+//************************************************************** vectors ******************************************************************//
+/*
+none
+*/
+//****************************************************************************************************************************************//
