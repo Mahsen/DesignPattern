@@ -81,10 +81,13 @@ class Event {
 /*--------------------------------------------------------------------------------------------------------------------*/
 class Process {
     private:
+        /* vector of all event that can happend */
         vector<Event*> Events;
+        /* Commad is what to doing */
         string _Command;
 
     public:
+        /* This function add event to vector */
         Status* attach(Event* Event) {
             static Status status;
             status.SetMessage(Status::Message::Fault);
@@ -94,6 +97,8 @@ class Process {
 
             return &status;
         }
+
+        /* This function rub all events from vectors */
         Status* Handle() {
             static Status status;
             status.SetMessage(Status::Message::Fault);
@@ -106,6 +111,8 @@ class Process {
 
             return &status;
         }
+
+        /* This function set commad and the run handle function */
         Status* Execute(string Command) {
             static Status status;
             status.SetMessage(Status::Message::Fault);
@@ -116,12 +123,15 @@ class Process {
 
             return &status;
         }
+
+        /* This function use events */
         string getCommand() {
             return _Command;
         }
 };
 
 /*--------------------------------------------------------------------------------------------------------------------*/
+/* This class for analize one */
 class Event_1 : public Event {
     public:
         Status* Handle(Process *_Process) const override {
@@ -136,6 +146,7 @@ class Event_1 : public Event {
 };
 
 /*--------------------------------------------------------------------------------------------------------------------*/
+/* This class for analize two */
 class Event_2 : public Event {
     public:
         Status* Handle(Process *_Process) const override {
@@ -150,6 +161,7 @@ class Event_2 : public Event {
 };
 
 /*--------------------------------------------------------------------------------------------------------------------*/
+/* This class for analize three */
 class Event_3 : public Event {
     public:
         Status* Handle(Process *_Process) const override {
@@ -169,16 +181,24 @@ int main() {
     /* For translation of return values */
     Status *status;
 
+    /* This for handle all event process  */
     Process process;
 
+    /* First event */
     Event_1 event_1;
+    /* Second event */
     Event_2 event_2;
+    /* Third event */
     Event_3 event_3;
 
+    /* Add first event */
     status = process.attach(&event_1);
+    /* Add second event */
     status = process.attach(&event_2);
+    /* Add third event */
     status = process.attach(&event_3);
 
+    /* Now execute all event with command '123456' */
     status = process.Execute("123456");
 
     /* Return successful*/
