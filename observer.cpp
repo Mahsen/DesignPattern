@@ -85,6 +85,10 @@ class Process {
         vector<Event*> Events;
         /* Commad is what to doing */
         string _Command;
+        /* This function set local Command */
+        void setCommand(string Command) {
+            this->_Command = Command;
+        }
 
     public:
         /* This function add event to vector */
@@ -117,7 +121,7 @@ class Process {
             static Status status;
             status.SetMessage(Status::Message::Fault);
 
-            this->_Command = Command;
+            setCommand(Command);
             Handle();
             status.SetMessage(Status::Message::Success);
 
