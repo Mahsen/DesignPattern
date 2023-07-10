@@ -1,7 +1,42 @@
-#include <iostream>
 
+/************************************************** Description *******************************************************/
+/*
+    File : singleton.cpp
+    Programmer : Mohammad Lotfi
+    Used : Sample used Chain of Responsibility
+    Design Pattern : Chain of Responsibility
+    Types of memory : Heap & Stack
+    Total Tread : Nothing
+    Site : https://www.mahsen.ir
+    Tel : +989124662703
+    Email : info@mahsen.ir
+    Last Update : 2023/7/10
+*/
+/************************************************** Warnings **********************************************************/
+/*
+    Only for learning
+*/
+/************************************************** Wizards ***********************************************************/
+/*
+    Nothing
+*/
+/************************************************** Includes **********************************************************/
+/* Include standard input-output stream head */
+#include "iostream"
+/* Vector of everything head */
+#include "vector"
+/************************************************** Defineds **********************************************************/
+/*
+    Nothing
+*/
+/************************************************** Names *************************************************************/
+/* Using std */
 using namespace std;
-
+/************************************************** Variables *********************************************************/
+/*
+    Nothing
+*/
+/************************************************** Opjects ***********************************************************/
 class PrinterManager {
     private: static PrinterManager *Instance;
     private: int Used;
@@ -24,7 +59,8 @@ class PrinterManager {
     }    
 };
 PrinterManager* PrinterManager::Instance = nullptr;
-
+/************************************************** Functions *********************************************************/
+/* The main function start of program in cpp language */
 int main() {
 
     PrinterManager *Obj_1 = PrinterManager::getInstance();
@@ -38,3 +74,12 @@ int main() {
 
     return 0;
 }
+/************************************************** Tasks *************************************************************/
+/*
+    Nothing
+*/
+/************************************************** Vectors ***********************************************************/
+/*
+    Nothing
+*/
+/**********************************************************************************************************************/
