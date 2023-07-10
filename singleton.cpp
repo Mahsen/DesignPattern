@@ -3,8 +3,8 @@
 /*
     File : singleton.cpp
     Programmer : Mohammad Lotfi
-    Used : Sample used Chain of Responsibility
-    Design Pattern : Chain of Responsibility
+    Used : Sample used Printer Singleton
+    Design Pattern : Singleton
     Types of memory : Heap & Stack
     Total Tread : Nothing
     Site : https://www.mahsen.ir
@@ -23,8 +23,6 @@
 /************************************************** Includes **********************************************************/
 /* Include standard input-output stream head */
 #include "iostream"
-/* Vector of everything head */
-#include "vector"
 /************************************************** Defineds **********************************************************/
 /*
     Nothing
